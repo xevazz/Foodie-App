@@ -1,84 +1,36 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
-
 import { AppProvider } from './src/context/AppContext';
 import HomeScreen from './src/screens/HomeScreen';
 import RecipeDetailScreen from './src/screens/RecipeDetailScreen';
 import FavoritesScreen from './src/screens/FavoritesScreen';
-import MyFoodScreen from './src/screens/MyFoodScreen';
 import AddEditRecipeScreen from './src/screens/AddEditRecipeScreen';
 import MyRecipeDetailScreen from './src/screens/MyRecipeDetailScreen';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
 const FavStack = createNativeStackNavigator();
-const MyFoodStack = createNativeStackNavigator();
 
-function HomeStackNav() {
+function HomeNav() {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Feed" component={HomeScreen} />
-      <HomeStack.Screen
-        name="RecipeDetail"
-        component={RecipeDetailScreen}
-        options={{ headerShown: false }}
-      />
+      <HomeStack.Screen name="RecipeDetail" component={RecipeDetailScreen} />
+      <HomeStack.Screen name="AddEditRecipe" component={AddEditRecipeScreen} />
+      <HomeStack.Screen name="MyRecipeDetail" component={MyRecipeDetailScreen} />
     </HomeStack.Navigator>
   );
 }
 
-function FavStackNav() {
+function FavNav() {
   return (
-    <FavStack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: '#FF6B35' },
-        headerTintColor: 'white',
-        headerTitleStyle: { fontWeight: 'bold' },
-      }}
-    >
-      <FavStack.Screen
-        name="FavoritesList"
-        component={FavoritesScreen}
-        options={{ title: 'Mis Favoritos' }}
-      />
-      <FavStack.Screen
-        name="RecipeDetail"
-        component={RecipeDetailScreen}
-        options={{ headerShown: false }}
-      />
+    <FavStack.Navigator screenOptions={{ headerShown: false }}>
+      <FavStack.Screen name="FavList" component={FavoritesScreen} />
+      <FavStack.Screen name="RecipeDetail" component={RecipeDetailScreen} />
     </FavStack.Navigator>
-  );
-}
-
-function MyFoodStackNav() {
-  return (
-    <MyFoodStack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: '#FF6B35' },
-        headerTintColor: 'white',
-        headerTitleStyle: { fontWeight: 'bold' },
-      }}
-    >
-      <MyFoodStack.Screen
-        name="MyFood"
-        component={MyFoodScreen}
-        options={{ title: 'Mi Comida' }}
-      />
-      <MyFoodStack.Screen
-        name="AddEditRecipe"
-        component={AddEditRecipeScreen}
-        options={{ headerShown: false }}
-      />
-      <MyFoodStack.Screen
-        name="MyRecipeDetail"
-        component={MyRecipeDetailScreen}
-        options={{ headerShown: false }}
-      />
-    </MyFoodStack.Navigator>
   );
 }
 
@@ -92,46 +44,18 @@ export default function App() {
             headerShown: false,
             tabBarActiveTintColor: '#FF6B35',
             tabBarInactiveTintColor: '#aaa',
-            tabBarStyle: {
-              backgroundColor: 'white',
-              borderTopWidth: 1,
-              borderTopColor: '#eee',
-              paddingBottom: 6,
-              paddingTop: 4,
-              height: 60,
-            },
-            tabBarLabelStyle: {
-              fontSize: 11,
-              fontWeight: '600',
-            },
+            tabBarStyle: { paddingBottom: 6, paddingTop: 4, height: 60 },
+            tabBarLabelStyle: { fontSize: 11, fontWeight: '600' },
             tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
-              if (route.name === 'Home') {
-                iconName = focused ? 'home' : 'home-outline';
-              } else if (route.name === 'Favorites') {
-                iconName = focused ? 'heart' : 'heart-outline';
-              } else if (route.name === 'MyFood') {
-                iconName = focused ? 'restaurant' : 'restaurant-outline';
-              }
-              return <Ionicons name={iconName} size={size} color={color} />;
+              let icon;
+              if (route.name === 'Home') icon = focused ? 'home' : 'home-outline';
+              else icon = focused ? 'heart' : 'heart-outline';
+              return <Ionicons name={icon} size={size} color={color} />;
             },
           })}
         >
-          <Tab.Screen
-            name="Home"
-            component={HomeStackNav}
-            options={{ title: 'Inicio' }}
-          />
-          <Tab.Screen
-            name="Favorites"
-            component={FavStackNav}
-            options={{ title: 'Favoritos' }}
-          />
-          <Tab.Screen
-            name="MyFood"
-            component={MyFoodStackNav}
-            options={{ title: 'Mi Comida' }}
-          />
+          <Tab.Screen name="Home" component={HomeNav} options={{ title: 'Home' }} />
+          <Tab.Screen name="Favorites" component={FavNav} options={{ title: 'Favorites' }} />
         </Tab.Navigator>
       </NavigationContainer>
     </AppProvider>
