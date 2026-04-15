@@ -1,0 +1,1 @@
+Hi! This is my Coursera project. The idea is to build a recipe-style application that works with React Native and can run on both Android and iOS using Expo. You can review it by creating an account on Expo Devs and trying it out through Snacks.
