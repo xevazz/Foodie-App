@@ -47,9 +47,9 @@ export default function App() {
             tabBarStyle: { paddingBottom: 6, paddingTop: 4, height: 60 },
             tabBarLabelStyle: { fontSize: 11, fontWeight: '600' },
             tabBarIcon: ({ focused, color, size }) => {
-              let icon;
-              if (route.name === 'Home') icon = focused ? 'home' : 'home-outline';
-              else icon = focused ? 'heart' : 'heart-outline';
+              const icon = route.name === 'Home'
+                ? (focused ? 'home' : 'home-outline')
+                : (focused ? 'heart' : 'heart-outline');
               return <Ionicons name={icon} size={size} color={color} />;
             },
           })}
